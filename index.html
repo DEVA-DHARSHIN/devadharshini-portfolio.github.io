@@ -188,7 +188,7 @@
 
   <!-- NAV -->
   <nav>
-    <div class="nav-logo">Deva<span>Protfolio</span></div>
+    <div class="nav-logo">Deva<span>.</span></div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -584,8 +584,4 @@
     function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
     function closeOnOverlay(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
     document.addEventListener('keydown', e => { if (e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow=''; }); });
-
-    // Form
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = document.quer
+</script>
