@@ -1,177 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Deva Dharshini R — WordPress & SaaS Web Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy: #0B1D3A; --navy-mid: #132848; --navy-lt: #1E3A5F;
-      --blue: #2563EB; --blue-lt: #3B82F6; --gold: #F0B429;
-      --white: #FFFFFF; --text: #CBD5E1; --muted: #7E97B8;
-      --border: rgba(255,255,255,0.07);
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.7; overflow-x: hidden; }
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--navy); }
-    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 10px; }
-    .spotlight { position: fixed; width: 500px; height: 500px; background: radial-gradient(circle, rgba(37,99,235,0.055) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; transform: translate(-50%,-50%); transition: left 0.06s, top 0.06s; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; background: rgba(11,29,58,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--white); }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; position: relative; }
-    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--blue-lt); transition: width 0.25s; }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-cta { background: var(--blue) !important; color: var(--white) !important; padding: 0.42rem 1.15rem; border-radius: 6px; }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { background: var(--blue-lt) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
-    @media(max-width:860px){ .nav-links{display:none;} .nav-hamburger{display:flex;} }
-    #hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 5% 60px; position: relative; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(37,99,235,0.1) 0%, transparent 70%); }
-    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); }
-    .hero-inner { position: relative; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 320px; gap: 4rem; align-items: center; width: 100%; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.28); border-radius: 100px; padding: 0.28rem 0.9rem; font-size: 0.73rem; color: var(--blue-lt); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.1rem; opacity: 0; animation: fadeUp 0.6s 0.2s forwards; }
-    .hero-tag::before { content: ''; width: 6px; height: 6px; background: #22C55E; border-radius: 50%; animation: blink 2s infinite; }
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
-    .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem,5vw,4.4rem); font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 0.55rem; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
-    .hero-name span { background: linear-gradient(135deg, var(--blue-lt), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-role { font-size: 1rem; color: var(--muted); margin-bottom: 1.1rem; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
-    .hero-desc { font-size: 0.975rem; color: var(--text); max-width: 520px; margin-bottom: 1.8rem; line-height: 1.85; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
-    .hero-btns { display: flex; gap: 1rem; opacity: 0; animation: fadeUp 0.7s 0.8s forwards; }
-    .btn-primary { background: var(--blue); color: var(--white); padding: 0.72rem 1.7rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 20px rgba(37,99,235,0.3); }
-    .btn-primary:hover { background: var(--blue-lt); transform: translateY(-2px); }
-    .btn-outline { border: 1.5px solid rgba(255,255,255,0.17); color: var(--white); padding: 0.72rem 1.7rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
-    .btn-outline:hover { border-color: var(--blue-lt); background: rgba(59,130,246,0.08); transform: translateY(-2px); }
-    .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.4rem; opacity: 0; animation: fadeUp 0.7s 0.95s forwards; }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--white); line-height: 1; }
-    .stat-num span { color: var(--gold); }
-    .stat-label { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
-    .hero-card { opacity: 0; animation: fadeLeft 0.9s 0.5s forwards; }
-    .avatar-wrap { width: 270px; height: 310px; background: linear-gradient(145deg, var(--navy-mid), var(--navy-lt)); border: 1px solid rgba(37,99,235,0.22); border-radius: 24px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin: 0 auto; box-shadow: 0 24px 64px rgba(0,0,0,0.4); }
-    .avatar-wrap::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 0%, rgba(37,99,235,0.12) 30%, transparent 60%); animation: spin 10s linear infinite; }
-    @keyframes spin { to{transform:rotate(360deg);} }
-    .avatar-inner { position: relative; z-index: 1; width: 110px; height: 110px; background: linear-gradient(135deg, var(--blue), #1E40AF); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--white); font-weight: 700; box-shadow: 0 0 40px rgba(37,99,235,0.5); }
-    .floating-badge { position: absolute; background: var(--navy-mid); border: 1px solid rgba(37,99,235,0.3); border-radius: 10px; padding: 0.4rem 0.7rem; font-size: 0.69rem; font-weight: 600; color: var(--white); white-space: nowrap; display: flex; align-items: center; gap: 0.38rem; z-index: 2; }
-    .badge-1 { top: 22px; right: -12px; animation: float 3s ease-in-out infinite; }
-    .badge-2 { bottom: 55px; left: -18px; animation: float 3s ease-in-out 1s infinite; }
-    .badge-3 { bottom: 22px; right: 12px; animation: float 3s ease-in-out 1.8s infinite; }
-    .badge-4 { top: 80px; left: -14px; animation: float 3s ease-in-out 0.5s infinite; }
-    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-7px);} }
-    .badge-icon { width: 15px; height: 15px; object-fit: contain; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
-    @keyframes fadeLeft { from{opacity:0;transform:translateX(30px);} to{opacity:1;transform:translateX(0);} }
-    section { padding: 88px 5%; position: relative; z-index: 1; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-lt); font-weight: 600; margin-bottom: 0.4rem; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,3vw,2.4rem); color: var(--white); font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; }
-    .section-title span { color: var(--blue-lt); }
-    .section-line { width: 48px; height: 3px; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 2px; margin-bottom: 2.8rem; }
-    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0 5%; }
-    #about { background: var(--navy-mid); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .about-text p { font-size: 0.96rem; margin-bottom: 1.1rem; line-height: 1.85; }
-    .about-text p strong { color: var(--white); font-weight: 600; }
-    .trait-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1.3rem; }
-    .trait { display: flex; align-items: center; gap: 0.5rem; background: rgba(37,99,235,0.07); border: 1px solid rgba(37,99,235,0.13); border-radius: 9px; padding: 0.52rem 0.8rem; font-size: 0.79rem; color: var(--text); font-weight: 500; transition: border-color 0.2s, background 0.2s; }
-    .trait:hover { border-color: rgba(37,99,235,0.35); background: rgba(37,99,235,0.12); }
-    .about-metrics { display: flex; flex-direction: column; gap: 1.2rem; }
-    .metric-card { background: var(--navy); border: 1px solid var(--border); border-radius: 13px; padding: 1.25rem 1.4rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
-    .metric-card:hover { border-color: rgba(37,99,235,0.32); transform: translateX(5px); }
-    .metric-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--blue), var(--gold)); }
-    .metric-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); }
-    .metric-num span { color: var(--gold); }
-    .metric-desc { font-size: 0.79rem; color: var(--muted); margin-top: 0.18rem; }
-    #skills { background: var(--navy); }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 1.3rem; }
-    .skill-card { background: var(--navy-mid); border: 1px solid var(--border); border-radius: 15px; padding: 1.4rem; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
-    .skill-card:hover { border-color: rgba(37,99,235,0.36); transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,0.28); }
-    .skill-card-head { display: flex; align-items: center; gap: 0.72rem; margin-bottom: 1rem; }
-    .skill-icon { width: 38px; height: 38px; border-radius: 9px; background: rgba(37,99,235,0.13); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
-    .skill-card-title { font-weight: 600; color: var(--white); font-size: 0.88rem; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.42rem; }
-    .skill-tag { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); border-radius: 5px; padding: 0.2rem 0.58rem; font-size: 0.72rem; color: var(--text); transition: background 0.2s, border-color 0.2s; }
-    .skill-card:hover .skill-tag { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.2); }
-    #projects { background: var(--navy-mid); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-    .project-card { background: var(--navy); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; cursor: pointer; }
-    .project-card:hover { transform: translateY(-6px); box-shadow: 0 22px 55px rgba(0,0,0,0.38); border-color: rgba(37,99,235,0.3); }
-    .project-banner { height: 148px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; overflow: hidden; }
-    .project-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, var(--navy)); }
-    .project-body { padding: 1.3rem; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.36rem; margin-bottom: 0.65rem; }
-    .project-tag { background: rgba(37,99,235,0.1); color: var(--blue-lt); font-size: 0.67rem; font-weight: 600; padding: 0.17rem 0.52rem; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .project-tag.pub { background: rgba(34,197,94,0.1); color: #22C55E; }
-    .project-tag.priv { background: rgba(250,204,21,0.1); color: #FACC15; }
-    .project-title { font-family: 'Playfair Display', serif; font-size: 1.12rem; color: var(--white); font-weight: 600; margin-bottom: 0.5rem; }
-    .project-desc { font-size: 0.835rem; color: var(--muted); line-height: 1.68; margin-bottom: 0.9rem; }
-    .project-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.85rem; border-top: 1px solid var(--border); }
-    .project-company { font-size: 0.7rem; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 0.17rem 0.52rem; border-radius: 4px; }
-    .project-view-btn { font-size: 0.74rem; color: var(--blue-lt); font-weight: 600; display: flex; align-items: center; gap: 0.3rem; }
-    .project-view-btn svg { transition: transform 0.2s; }
-    .project-card:hover .project-view-btn svg { transform: translateX(3px); }
-    .modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(5,12,24,0.88); backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.28s; }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal { background: var(--navy-mid); border: 1px solid rgba(37,99,235,0.18); border-radius: 20px; max-width: 660px; width: 100%; max-height: 90vh; overflow-y: auto; transform: translateY(18px) scale(0.97); transition: transform 0.28s; position: relative; }
-    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
-    .modal-img { width: 100%; height: 200px; border-radius: 18px 18px 0 0; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
-    .modal-body { padding: 1.7rem; }
-    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.38rem; margin-bottom: 0.75rem; }
-    .modal-tag { background: rgba(37,99,235,0.12); color: var(--blue-lt); font-size: 0.69rem; font-weight: 600; padding: 0.18rem 0.58rem; border-radius: 4px; text-transform: uppercase; }
-    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: var(--white); font-weight: 700; margin-bottom: 0.28rem; }
-    .modal-company { font-size: 0.78rem; color: var(--blue-lt); margin-bottom: 0.9rem; }
-    .modal-desc { font-size: 0.875rem; color: var(--text); line-height: 1.8; margin-bottom: 1.1rem; }
-    .modal-points { list-style: none; display: flex; flex-direction: column; gap: 0.48rem; }
-    .modal-points li { font-size: 0.865rem; color: var(--text); padding-left: 1.2rem; position: relative; line-height: 1.7; }
-    .modal-points li::before { content: '→'; position: absolute; left: 0; color: var(--blue-lt); font-weight: 600; }
-    .modal-close { position: absolute; top: 0.9rem; right: 0.9rem; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: var(--white); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; }
-    .modal-close:hover { background: rgba(255,255,255,0.16); }
-    #contact { background: var(--navy-mid); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3.5rem; align-items: start; }
-    .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--white); margin-bottom: 0.65rem; }
-    .contact-info p { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.8rem; line-height: 1.75; }
-    .contact-items { display: flex; flex-direction: column; gap: 0.85rem; }
-    .contact-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.82rem 1rem; background: var(--navy); border: 1px solid var(--border); border-radius: 11px; transition: border-color 0.2s; text-decoration: none; }
-    .contact-item:hover { border-color: rgba(37,99,235,0.32); }
-    .contact-item-icon { width: 34px; height: 34px; background: rgba(37,99,235,0.13); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-    .contact-item-label { color: var(--muted); font-size: 0.68rem; margin-bottom: 1px; }
-    .contact-item-val { color: var(--white); font-weight: 500; font-size: 0.83rem; }
-    .social-links { display: flex; gap: 0.7rem; margin-top: 1.4rem; }
-    .social-link { width: 38px; height: 38px; background: var(--navy); border: 1px solid var(--border); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s; }
-    .social-link:hover { border-color: var(--blue); color: var(--white); background: rgba(37,99,235,0.14); }
-    .contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-    .form-group label { font-size: 0.74rem; color: var(--muted); font-weight: 500; }
-    .form-group input, .form-group textarea, .form-group select { background: var(--navy); border: 1px solid var(--border); border-radius: 9px; padding: 0.7rem 0.95rem; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.87rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; resize: none; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
-    .form-group select option { background: var(--navy-mid); color: var(--white); }
-    .form-submit { background: var(--blue); color: var(--white); border: none; padding: 0.8rem 2rem; border-radius: 9px; font-size: 0.88rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.2s, transform 0.15s; width: 100%; }
-    .form-submit:hover { background: var(--blue-lt); transform: translateY(-2px); }
-    .form-success { display: none; text-align: center; padding: 1.3rem; background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.22); border-radius: 11px; color: #22C55E; font-size: 0.875rem; }
-    footer { background: var(--navy); border-top: 1px solid var(--border); padding: 1.8rem 5%; }
-    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-    .footer-name { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1rem; }
-    .footer-name span { color: var(--gold); }
-    .footer-copy { font-size: 0.74rem; color: var(--muted); }
-    .footer-links { display: flex; gap: 1.4rem; }
-    .footer-links a { font-size: 0.74rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--blue-lt); }
-    @media(max-width:860px) {
-      .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-      .hero-card { display: none; }
-      .form-row { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#0B1D3A;--navy-mid:#132848;--navy-lt:#1E3A5F;--blue:#2563EB;--blue-lt:#3B82F6;--gold:#F0B429;--white:#FFF;--text:#CBD5E1;--muted:#7E97B8;--border:rgba(255,255,255,0.07)}
+    html{scroll-behavior:smooth}
+    body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7;overflow-x:hidden}
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--blue);border-radius:10px}
+    .spotlight{position:fixed;width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,0.05) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left .06s,top .06s}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:68px;background:rgba(11,29,58,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white)}.nav-logo span{color:var(--gold)}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--blue-lt);transition:width .25s}
+    .nav-links a:hover{color:var(--white)}.nav-links a:hover::after{width:100%}
+    .nav-cta{background:var(--blue)!important;color:var(--white)!important;padding:.42rem 1.15rem;border-radius:6px}.nav-cta::after{display:none!important}.nav-cta:hover{background:var(--blue-lt)!important}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}.nav-hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+    @media(max-width:860px){.nav-links{display:none}.nav-hamburger{display:flex}}
+    #hero{min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 50%,rgba(37,99,235,.1) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 15% 80%,rgba(240,180,41,.04) 0%,transparent 60%)}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%)}
+    .hero-inner{position:relative;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:4rem;align-items:center;width:100%}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.28);border-radius:100px;padding:.28rem .9rem;font-size:.73rem;color:var(--blue-lt);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1rem;opacity:0;animation:fadeUp .6s .2s forwards}
+    .hero-tag::before{content:'';width:6px;height:6px;background:#22C55E;border-radius:50%;animation:blink 2s infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.4rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:.55rem;opacity:0;animation:fadeUp .7s .35s forwards}
+    .hero-name span{background:linear-gradient(135deg,var(--blue-lt),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-role{font-size:1rem;color:var(--muted);margin-bottom:1.1rem;opacity:0;animation:fadeUp .7s .5s forwards}
+    .hero-desc{font-size:.975rem;color:var(--text);max-width:520px;margin-bottom:1.8rem;line-height:1.85;opacity:0;animation:fadeUp .7s .65s forwards}
+    .hero-btns{display:flex;gap:1rem;opacity:0;animation:fadeUp .7s .8s forwards}
+    .btn-primary{background:var(--blue);color:var(--white);padding:.72rem 1.7rem;border-radius:8px;font-size:.9rem;font-weight:600;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 20px rgba(37,99,235,.3)}
+    .btn-primary:hover{background:var(--blue-lt);transform:translateY(-2px)}
+    .btn-outline{border:1.5px solid rgba(255,255,255,.17);color:var(--white);padding:.72rem 1.7rem;border-radius:8px;font-size:.9rem;font-weight:500;text-decoration:none;transition:border-color .2s,background .2s,transform .15s}
+    .btn-outline:hover{border-color:var(--blue-lt);background:rgba(59,130,246,.08);transform:translateY(-2px)}
+    .hero-stats{display:flex;gap:2.5rem;margin-top:2.4rem;opacity:0;animation:fadeUp .7s .95s forwards}
+    .stat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--white);line-height:1}.stat-num span{color:var(--gold)}
+    .stat-label{font-size:.7rem;color:var(--muted);margin-top:2px}
+    .hero-card{opacity:0;animation:fadeLeft .9s .5s forwards}
+    .avatar-wrap{width:270px;height:310px;background:linear-gradient(145deg,var(--navy-mid),var(--navy-lt));border:1px solid rgba(37,99,235,.22);border-radius:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin:0 auto;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+    .avatar-wrap::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0%,rgba(37,99,235,.12) 30%,transparent 60%);animation:spin 10s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .avatar-inner{position:relative;z-index:1;width:110px;height:110px;background:linear-gradient(135deg,var(--blue),#1E40AF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--white);font-weight:700;box-shadow:0 0 40px rgba(37,99,235,.5)}
+    .floating-badge{position:absolute;background:var(--navy-mid);border:1px solid rgba(37,99,235,.3);border-radius:10px;padding:.4rem .7rem;font-size:.69rem;font-weight:600;color:var(--white);white-space:nowrap;display:flex;align-items:center;gap:.38rem;z-index:2}
+    .badge-1{top:22px;right:-12px;animation:float 3s ease-in-out infinite}
+    .badge-2{bottom:55px;left:-18px;animation:float 3s ease-in-out 1s infinite}
+    .badge-3{bottom:22px;right:12px;animation:float 3s ease-in-out 1.8s infinite}
+    .badge-4{top:80px;left:-14px;animation:float 3s ease-in-out .5s infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    .badge-icon{width:15px;height:15px;object-fit:contain}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeLeft{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+    section{padding:88px 5%;position:relative;z-index:1}
+    .container{max-width:1100px;margin:0 auto}
+    .section-label{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-lt);font-weight:600;margin-bottom:.4rem}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--white);font-weight:700;line-height:1.2;margin-bottom:.5rem}
+    .section-title span{color:var(--blue-lt)}
+    .section-line{width:48px;height:3px;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:2px;margin-bottom:2.8rem}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 5%}
+    #about{background:var(--navy-mid)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .about-text p{font-size:.96rem;margin-bottom:1.1rem;line-height:1.85}
+    .about-text p strong{color:var(--white);font-weight:600}
+    .trait-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.3rem}
+    .trait{display:flex;align-items:center;gap:.5rem;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.13);border-radius:9px;padding:.52rem .8rem;font-size:.79rem;color:var(--text);font-weight:500;transition:border-color .2s,background .2s}
+    .trait:hover{border-color:rgba(37,99,235,.35);background:rgba(37,99,235,.12)}
+    .about-metrics{display:flex;flex-direction:column;gap:1.2rem}
+    .metric-card{background:var(--navy);border:1px solid var(--border);border-radius:13px;padding:1.25rem 1.4rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+    .metric-card:hover{border-color:rgba(37,99,235,.32);transform:translateX(5px)}
+    .metric-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--blue),var(--gold))}
+    .metric-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--white)}.metric-num span{color:var(--gold)}
+    .metric-desc{font-size:.79rem;color:var(--muted);margin-top:.18rem}
+    #skills{background:var(--navy)}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:1.3rem}
+    .skill-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:15px;padding:1.4rem;transition:border-color .3s,transform .3s,box-shadow .3s}
+    .skill-card:hover{border-color:rgba(37,99,235,.36);transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.28)}
+    .skill-card-head{display:flex;align-items:center;gap:.72rem;margin-bottom:1rem}
+    .skill-icon{width:38px;height:38px;border-radius:9px;background:rgba(37,99,235,.13);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+    .skill-card-title{font-weight:600;color:var(--white);font-size:.88rem}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:.42rem}
+    .skill-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:.2rem .58rem;font-size:.72rem;color:var(--text);transition:background .2s,border-color .2s}
+    .skill-card:hover .skill-tag{background:rgba(37,99,235,.1);border-color:rgba(37,99,235,.2)}
+    #projects{background:var(--navy-mid)}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+    .project-card{background:var(--navy);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;cursor:pointer}
+    .project-card:hover{transform:translateY(-6px);box-shadow:0 22px 55px rgba(0,0,0,.38);border-color:rgba(37,99,235,.3)}
+    .project-banner{height:148px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+    .project-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,var(--navy))}
+    .project-body{padding:1.3rem}
+    .project-tags{display:flex;flex-wrap:wrap;gap:.36rem;margin-bottom:.65rem}
+    .project-tag{background:rgba(37,99,235,.1);color:var(--blue-lt);font-size:.67rem;font-weight:600;padding:.17rem .52rem;border-radius:4px;letter-spacing:.04em;text-transform:uppercase}
+    .project-tag.pub{background:rgba(34,197,94,.1);color:#22C55E}
+    .project-tag.priv{background:rgba(250,204,21,.1);color:#FACC15}
+    .project-title{font-family:'Playfair Display',serif;font-size:1.12rem;color:var(--white);font-weight:600;margin-bottom:.5rem}
+    .project-desc{font-size:.835rem;color:var(--muted);line-height:1.68;margin-bottom:.9rem}
+    .project-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.85rem;border-top:1px solid var(--border)}
+    .project-company{font-size:.7rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.17rem .52rem;border-radius:4px}
+    .project-view-btn{font-size:.74rem;color:var(--blue-lt);font-weight:600;display:flex;align-items:center;gap:.3rem}
+    .project-view-btn svg{transition:transform .2s}.project-card:hover .project-view-btn svg{transform:translateX(3px)}
+    .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,12,24,.88);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .28s}
+    .modal-overlay.open{opacity:1;pointer-events:all}
+    .modal{background:var(--navy-mid);border:1px solid rgba(37,99,235,.18);border-radius:20px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(18px) scale(.97);transition:transform .28s;position:relative}
+    .modal-overlay.open .modal{transform:translateY(0) scale(1)}
+    .modal-img{width:100%;height:200px;border-radius:18px 18px 0 0;display:flex;align-items:center;justify-content:center;font-size:4rem}
+    .modal-body{padding:1.7rem}
+    .modal-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-bottom:.75rem}
+    .modal-tag{background:rgba(37,99,235,.12);color:var(--blue-lt);font-size:.69rem;font-weight:600;padding:.18rem .58rem;border-radius:4px;text-transform:uppercase}
+    .modal-title{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--white);font-weight:700;margin-bottom:.28rem}
+    .modal-company{font-size:.78rem;color:var(--blue-lt);margin-bottom:.9rem}
+    .modal-desc{font-size:.875rem;color:var(--text);line-height:1.8;margin-bottom:1.1rem}
+    .modal-points{list-style:none;display:flex;flex-direction:column;gap:.48rem}
+    .modal-points li{font-size:.865rem;color:var(--text);padding-left:1.2rem;position:relative;line-height:1.7}
+    .modal-points li::before{content:'→';position:absolute;left:0;color:var(--blue-lt);font-weight:600}
+    .modal-close{position:absolute;top:.9rem;right:.9rem;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--border);color:var(--white);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:2}
+    .modal-close:hover{background:rgba(255,255,255,.16)}
+    #contact{background:var(--navy-mid)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;align-items:start}
+    .contact-info h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--white);margin-bottom:.65rem}
+    .contact-info p{font-size:.875rem;color:var(--muted);margin-bottom:1.8rem;line-height:1.75}
+    .contact-items{display:flex;flex-direction:column;gap:.85rem}
+    .contact-item{display:flex;align-items:center;gap:.85rem;padding:.82rem 1rem;background:var(--navy);border:1px solid var(--border);border-radius:11px;transition:border-color .2s;text-decoration:none}
+    .contact-item:hover{border-color:rgba(37,99,235,.32)}
+    .contact-item-icon{width:34px;height:34px;background:rgba(37,99,235,.13);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+    .contact-item-label{color:var(--muted);font-size:.68rem;margin-bottom:1px}
+    .contact-item-val{color:var(--white);font-weight:500;font-size:.83rem}
+    .social-links{display:flex;gap:.7rem;margin-top:1.4rem}
+    .social-link{width:38px;height:38px;background:var(--navy);border:1px solid var(--border);border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:border-color .2s,color .2s,background .2s}
+    .social-link:hover{border-color:var(--blue);color:var(--white);background:rgba(37,99,235,.14)}
+    .contact-form{display:flex;flex-direction:column;gap:.9rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+    .form-group{display:flex;flex-direction:column;gap:.35rem}
+    .form-group label{font-size:.74rem;color:var(--muted);font-weight:500}
+    .form-group input,.form-group textarea,.form-group select{background:var(--navy);border:1px solid var(--border);border-radius:9px;padding:.7rem .95rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.87rem;transition:border-color .2s,box-shadow .2s;outline:none;resize:none}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted)}
+    .form-group select option{background:var(--navy-mid);color:var(--white)}
+    .form-submit{background:var(--blue);color:var(--white);border:none;padding:.8rem 2rem;border-radius:9px;font-size:.88rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s,transform .15s;width:100%;box-shadow:0 4px 16px rgba(37,99,235,.27)}
+    .form-submit:hover{background:var(--blue-lt);transform:translateY(-2px)}
+    .form-success{display:none;text-align:center;padding:1.3rem;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.22);border-radius:11px;color:#22C55E;font-size:.875rem}
+    footer{background:var(--navy);border-top:1px solid var(--border);padding:1.8rem 5%}
+    .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .footer-name{font-family:'Playfair Display',serif;color:var(--white);font-size:1rem}.footer-name span{color:var(--gold)}
+    .footer-copy{font-size:.74rem;color:var(--muted)}
+    .footer-links{display:flex;gap:1.4rem}
+    .footer-links a{font-size:.74rem;color:var(--muted);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--blue-lt)}
+    @media(max-width:860px){.hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr}.hero-card{display:none}.form-row{grid-template-columns:1fr}.footer-inner{flex-direction:column;gap:.8rem;text-align:center}}
   </style>
 </head>
 <body>
@@ -187,17 +166,18 @@
   <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div><div class="hero-grid"></div>
   <div class="hero-inner">
     <div>
       <div class="hero-tag">Available for Opportunities</div>
       <h1 class="hero-name">Deva<br><span>Dharshini R</span></h1>
-      <p class="hero-role">Junior Web Developer &amp; Designer &nbsp;·&nbsp; WordPress &amp; SaaS Specialist</p>
-      <p class="hero-desc">I build fast, high-converting web experiences for SaaS products — from landing pages and WooCommerce features to automation workflows that drive real business results.</p>
+      <p class="hero-role">Junior Web Developer &amp; Designer &nbsp;&middot;&nbsp; WordPress &amp; SaaS Specialist</p>
+      <p class="hero-desc">I build fast, high-converting web experiences for SaaS products &mdash; from landing pages and WooCommerce features to automation workflows that drive real business results.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View My Work</a>
-        <a href="#contact" class="btn-outline">Let's Talk</a>
+        <a href="#contact" class="btn-outline">Let&rsquo;s Talk</a>
       </div>
       <div class="hero-stats">
         <div><div class="stat-num">20<span>+</span></div><div class="stat-label">Landing Pages</div></div>
@@ -224,6 +204,8 @@
     </div>
   </div>
 </section>
+
+<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="reveal">
@@ -233,23 +215,23 @@
     </div>
     <div class="about-grid">
       <div class="about-text reveal">
-        <p>I'm <strong>Deva Dharshini</strong> — a WordPress &amp; SaaS Web Developer who loves turning design specs into fast, polished web experiences. I work at <strong>Cartrabbit</strong>, contributing to 5+ live products used by thousands of WooCommerce merchants globally.</p>
-        <p>My sweet spot is the intersection of <strong>development and performance</strong> — building pages that rank, load fast, and convert. I've pushed Lighthouse scores from <strong>~80% to 90–95%</strong> and built automation workflows that eliminate manual work entirely.</p>
+        <p>I&rsquo;m <strong>Deva Dharshini</strong> &mdash; a WordPress &amp; SaaS Web Developer who loves turning design specs into fast, polished web experiences. I work at <strong>Cartrabbit</strong>, contributing to 5+ live products used by thousands of WooCommerce merchants globally.</p>
+        <p>My sweet spot is the intersection of <strong>development and performance</strong> &mdash; building pages that rank, load fast, and convert. I&rsquo;ve pushed Lighthouse scores from <strong>~80% to 90&ndash;95%</strong> and built automation workflows that eliminate manual work entirely.</p>
         <p>Beyond code, I believe in <strong>ownership, clean UI, measurable results,</strong> and continuous learning.</p>
         <div class="trait-grid">
-          <div class="trait">🎯 Result-Oriented</div>
-          <div class="trait">⏰ Always On Time</div>
-          <div class="trait">💡 Creative Thinker</div>
-          <div class="trait">🤝 Team Leader</div>
-          <div class="trait">🔍 Detail-Focused</div>
-          <div class="trait">📈 Growth Mindset</div>
+          <div class="trait">&#127919; Result-Oriented</div>
+          <div class="trait">&#9200; Always On Time</div>
+          <div class="trait">&#128161; Creative Thinker</div>
+          <div class="trait">&#129309; Team Leader</div>
+          <div class="trait">&#128269; Detail-Focused</div>
+          <div class="trait">&#128200; Growth Mindset</div>
         </div>
       </div>
       <div class="about-metrics reveal">
         <div class="metric-card"><div class="metric-num">1<span>+ Yr</span></div><div class="metric-desc">Professional SaaS Product Experience at Cartrabbit</div></div>
         <div class="metric-card"><div class="metric-num">20<span>+</span></div><div class="metric-desc">High-converting landing pages across 5 SaaS products</div></div>
-        <div class="metric-card"><div class="metric-num">80→<span>95%</span></div><div class="metric-desc">Lighthouse performance improvement on key pages</div></div>
-        <div class="metric-card"><div class="metric-num">MCA</div><div class="metric-desc">Kongu Engineering College — CGPA: 8.8 / 10</div></div>
+        <div class="metric-card"><div class="metric-num">80&rarr;<span>95%</span></div><div class="metric-desc">Lighthouse performance improvement on key pages</div></div>
+        <div class="metric-card"><div class="metric-num">MCA</div><div class="metric-desc">Kongu Engineering College &mdash; CGPA: 8.8 / 10</div></div>
       </div>
     </div>
   </div>
@@ -257,6 +239,7 @@
 
 <div class="section-divider"></div>
 
+<!-- SKILLS -->
 <section id="skills">
   <div class="container">
     <div class="reveal">
@@ -265,114 +248,115 @@
       <div class="section-line"></div>
     </div>
     <div class="skills-grid">
-      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">🌐</div><div class="skill-card-title">Frontend Development</div></div><div class="skill-tags"><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">JavaScript</span><span class="skill-tag">React</span><span class="skill-tag">Elementor</span><span class="skill-tag">Gutenberg</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">⚙️</div><div class="skill-card-title">Backend Development</div></div><div class="skill-tags"><span class="skill-tag">PHP</span><span class="skill-tag">Python</span><span class="skill-tag">Flask</span><span class="skill-tag">MongoDB</span><span class="skill-tag">REST APIs</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">🛒</div><div class="skill-card-title">CMS &amp; eCommerce</div></div><div class="skill-tags"><span class="skill-tag">WordPress</span><span class="skill-tag">WooCommerce</span><span class="skill-tag">Plugin Dev</span><span class="skill-tag">Theme Customization</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">🔍</div><div class="skill-card-title">SEO &amp; Analytics</div></div><div class="skill-tags"><span class="skill-tag">Google Search Console</span><span class="skill-tag">Ahrefs</span><span class="skill-tag">SEMrush</span><span class="skill-tag">Core Web Vitals</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">⚡</div><div class="skill-card-title">Automation &amp; Email</div></div><div class="skill-tags"><span class="skill-tag">n8n</span><span class="skill-tag">Postmark</span><span class="skill-tag">Retainful</span><span class="skill-tag">Render</span></div></div>
-      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">📊</div><div class="skill-card-title">Performance &amp; Tools</div></div><div class="skill-tags"><span class="skill-tag">Lighthouse</span><span class="skill-tag">PageSpeed Insights</span><span class="skill-tag">Git</span><span class="skill-tag">GitHub</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">&#127760;</div><div class="skill-card-title">Frontend Development</div></div><div class="skill-tags"><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">JavaScript</span><span class="skill-tag">React</span><span class="skill-tag">Elementor</span><span class="skill-tag">Gutenberg</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">&#9881;&#65039;</div><div class="skill-card-title">Backend Development</div></div><div class="skill-tags"><span class="skill-tag">PHP</span><span class="skill-tag">Python</span><span class="skill-tag">Flask</span><span class="skill-tag">MongoDB</span><span class="skill-tag">REST APIs</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">&#128722;</div><div class="skill-card-title">CMS &amp; eCommerce</div></div><div class="skill-tags"><span class="skill-tag">WordPress</span><span class="skill-tag">WooCommerce</span><span class="skill-tag">Plugin Dev</span><span class="skill-tag">Theme Customization</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">&#128269;</div><div class="skill-card-title">SEO &amp; Analytics</div></div><div class="skill-tags"><span class="skill-tag">Google Search Console</span><span class="skill-tag">Ahrefs</span><span class="skill-tag">SEMrush</span><span class="skill-tag">Core Web Vitals</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">&#9889;</div><div class="skill-card-title">Automation &amp; Email</div></div><div class="skill-tags"><span class="skill-tag">n8n</span><span class="skill-tag">Postmark</span><span class="skill-tag">Retainful</span><span class="skill-tag">Render</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-head"><div class="skill-icon">&#128202;</div><div class="skill-card-title">Performance &amp; Tools</div></div><div class="skill-tags"><span class="skill-tag">Lighthouse</span><span class="skill-tag">PageSpeed Insights</span><span class="skill-tag">Git</span><span class="skill-tag">GitHub</span></div></div>
     </div>
   </div>
 </section>
 
 <div class="section-divider"></div>
 
+<!-- PROJECTS -->
 <section id="projects">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">What I've Built</p>
+      <p class="section-label">What I&rsquo;ve Built</p>
       <h2 class="section-title">Featured <span>Projects</span></h2>
       <div class="section-line"></div>
     </div>
     <div class="projects-grid">
 
       <div class="project-card reveal" onclick="openModal('buyxgety')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#0f2c5c,#1a4a8a);">🛒</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#0f2c5c,#1a4a8a)">&#128722;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">PHP</span><span class="project-tag">WooCommerce</span><span class="project-tag">WordPress</span></div>
-          <h3 class="project-title">Buy X Get X — Discount Feature</h3>
-          <p class="project-desc">Complete promotional module in Discount Rules for WooCommerce — cart logic, eligibility checks, free gift assignment and admin UI.</p>
-          <div class="project-footer"><span class="project-company">Cartrabbit · Discount Rules</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <h3 class="project-title">Buy X Get X &mdash; Discount Feature</h3>
+          <p class="project-desc">Complete promotional module in Discount Rules for WooCommerce &mdash; cart logic, eligibility checks, free gift assignment and admin UI.</p>
+          <div class="project-footer"><span class="project-company">Cartrabbit &middot; Discount Rules</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('automation')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#0a2540,#153e75);">🚀</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#0a2540,#153e75)">&#128640;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">n8n</span><span class="project-tag">Postmark</span><span class="project-tag">Automation</span></div>
           <h3 class="project-title">Lead-to-Email Automation Pipeline</h3>
-          <p class="project-desc">n8n workflows capturing landing page leads and triggering personalized email sequences via Postmark — zero manual outreach.</p>
-          <div class="project-footer"><span class="project-company">Cartrabbit · Retainful</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <p class="project-desc">n8n workflows capturing landing page leads and triggering personalized email sequences via Postmark &mdash; zero manual outreach.</p>
+          <div class="project-footer"><span class="project-company">Cartrabbit &middot; Retainful</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('perf')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#0c2340,#1a3a6e);">📈</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#0c2340,#1a3a6e)">&#128200;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">SEO</span><span class="project-tag">Lighthouse</span><span class="project-tag">Performance</span></div>
           <h3 class="project-title">SaaS Performance Optimization</h3>
-          <p class="project-desc">Audited 20+ pages across 5 SaaS products — fixing Core Web Vitals, LCP, CLS issues to push scores from ~80 to 90–95%.</p>
-          <div class="project-footer"><span class="project-company">Cartrabbit · Multiple</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <p class="project-desc">Audited 20+ pages across 5 SaaS products &mdash; fixing Core Web Vitals, LCP, CLS to push scores from ~80 to 90&ndash;95%.</p>
+          <div class="project-footer"><span class="project-company">Cartrabbit &middot; Multiple</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('freqbought')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#12243d,#1c3a60);">🔁</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#12243d,#1c3a60)">&#128257;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">PHP</span><span class="project-tag">WordPress</span><span class="project-tag priv">Private</span></div>
           <h3 class="project-title">Frequently Bought Product</h3>
-          <p class="project-desc">WordPress plugin to surface frequently bought products on the product page based on user search behaviour.</p>
-          <div class="project-footer"><span class="project-company">GitHub · Sep 2024</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <p class="project-desc">WordPress plugin surfacing frequently bought products on product pages based on user search behaviour &mdash; improving discovery.</p>
+          <div class="project-footer"><span class="project-company">GitHub &middot; Sep 2024</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('woofreq')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#12243d,#1c3a60);">🛍️</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#12243d,#1c3a60)">&#128717;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">PHP</span><span class="project-tag">WooCommerce</span><span class="project-tag pub">Public</span></div>
           <h3 class="project-title">WooCommerce Frequently Bought</h3>
-          <p class="project-desc">Adds "Frequently Bought Together" section on WooCommerce product pages based on user search — boosts average order value.</p>
-          <div class="project-footer"><span class="project-company">GitHub · Sep 2024</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <p class="project-desc">Adds a &ldquo;Frequently Bought Together&rdquo; section on WooCommerce product pages based on user search &mdash; boosts average order value.</p>
+          <div class="project-footer"><span class="project-company">GitHub &middot; Sep 2024</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('wpsendgrid')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#12243d,#1c3a60);">📨</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#12243d,#1c3a60)">&#128232;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">PHP</span><span class="project-tag">SendGrid</span><span class="project-tag pub">Public</span></div>
           <h3 class="project-title">WP SendGrid Mail</h3>
-          <p class="project-desc">WordPress plugin using SendGrid SMTP to send email reliably — replaces default wp_mail with SendGrid's transactional API.</p>
-          <div class="project-footer"><span class="project-company">GitHub · Sep 2024</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <p class="project-desc">WordPress plugin using SendGrid SMTP to send email reliably &mdash; replaces default wp_mail with SendGrid&rsquo;s transactional API.</p>
+          <div class="project-footer"><span class="project-company">GitHub &middot; Sep 2024</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('timetracker')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#0d1f3c,#1b3563);">⏱️</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#0d1f3c,#1b3563)">&#9201;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Java</span><span class="project-tag">JavaScript</span><span class="project-tag">HTML/CSS</span></div>
           <h3 class="project-title">Time Tracker App</h3>
-          <p class="project-desc">Full-featured time tracking app with task management, session logging, and visual progress reports — Java backend + JS frontend.</p>
+          <p class="project-desc">Full-featured time tracking app with task management, session logging, and visual progress reports &mdash; Java backend + JS frontend.</p>
           <div class="project-footer"><span class="project-company">Personal Project</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('imgcompressor')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#0b1e3d,#16305e);">🖼️</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#0b1e3d,#16305e)">&#128444;&#65039;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Extension</span><span class="project-tag">JavaScript</span><span class="project-tag">Canvas API</span></div>
           <h3 class="project-title">Image Compressor Extension</h3>
-          <p class="project-desc">Chrome extension to compress &amp; convert images — pick JPEG, PNG, or WebP, set target size, download instantly with live preview.</p>
+          <p class="project-desc">Chrome extension to compress &amp; convert images &mdash; pick JPEG, PNG, or WebP, set target size, download instantly with live preview.</p>
           <div class="project-footer"><span class="project-company">Personal Project</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
       <div class="project-card reveal" onclick="openModal('landing')">
-        <div class="project-banner" style="background:linear-gradient(135deg,#0e2545,#1d3f72);">🌐</div>
+        <div class="project-banner" style="background:linear-gradient(135deg,#0e2545,#1d3f72)">&#127760;</div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">Elementor</span><span class="project-tag">Conversion</span></div>
           <h3 class="project-title">20+ High-Converting Landing Pages</h3>
-          <p class="project-desc">Pages for YUKO, Retainful, UpsellWP, WP Loyalty &amp; Discount Rules — optimized for conversion, speed, and brand UI.</p>
-          <div class="project-footer"><span class="project-company">Cartrabbit · 5 Products</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+          <p class="project-desc">Pages for YUKO, Retainful, UpsellWP, WP Loyalty &amp; Discount Rules &mdash; optimized for conversion, speed, and brand UI.</p>
+          <div class="project-footer"><span class="project-company">Cartrabbit &middot; 5 Products</span><span class="project-view-btn">View Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </div>
       </div>
 
@@ -381,203 +365,134 @@
 </section>
 
 <!-- MODALS -->
-<div class="modal-overlay" id="modal-buyxgety" onclick="closeOnOverlay(event,'modal-buyxgety')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-buyxgety')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#0f2c5c,#1a4a8a);">🛒</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">WooCommerce</span><span class="modal-tag">WordPress</span></div>
-      <h3 class="modal-title">Buy X Get X — WooCommerce Discount Feature</h3>
-      <p class="modal-company">Cartrabbit · Discount Rules for WooCommerce</p>
-      <p class="modal-desc">A complete promotional engine inside the Discount Rules plugin allowing merchants to offer free products when certain purchase conditions are met — configurable from WordPress admin without code.</p>
-      <ul class="modal-points">
-        <li>Developed full Buy X Get X module using PHP inside existing plugin architecture</li>
-        <li>Cart-level evaluation logic with product eligibility rules and quantity conditions</li>
-        <li>Automatic free product assignment on qualifying cart states</li>
-        <li>Easy admin UI — non-technical merchants can set up complex promotions without code</li>
-        <li>Seamlessly integrated with WooCommerce cart, checkout, and order pipelines</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-buyxgety" onclick="closeOnOverlay(event,'modal-buyxgety')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-buyxgety')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#0f2c5c,#1a4a8a)">&#128722;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">WooCommerce</span><span class="modal-tag">WordPress</span></div><h3 class="modal-title">Buy X Get X &mdash; Discount Feature</h3><p class="modal-company">Cartrabbit &middot; Discount Rules for WooCommerce</p><p class="modal-desc">A complete promotional engine inside the Discount Rules plugin allowing merchants to offer free products when certain purchase conditions are met &mdash; configurable from WordPress admin without code.</p><ul class="modal-points"><li>Developed full Buy X Get X module using PHP inside existing plugin architecture</li><li>Cart-level evaluation logic with product eligibility rules and quantity conditions</li><li>Automatic free product assignment on qualifying cart states</li><li>Easy admin UI &mdash; non-technical merchants can set up complex promotions without code</li><li>Integrated with WooCommerce cart, checkout, and order pipelines</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-automation" onclick="closeOnOverlay(event,'modal-automation')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-automation')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#0a2540,#153e75);">🚀</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">n8n</span><span class="modal-tag">Postmark</span><span class="modal-tag">Render</span></div>
-      <h3 class="modal-title">Lead-to-Email Automation Pipeline</h3>
-      <p class="modal-company">Cartrabbit · Retainful</p>
-      <p class="modal-desc">End-to-end automation capturing leads from product landing pages and firing personalized email campaigns — fully hosted, zero manual intervention required.</p>
-      <ul class="modal-points">
-        <li>Built n8n workflows to collect form submissions and landing page lead data</li>
-        <li>Integrated Postmark for transactional and marketing email delivery</li>
-        <li>Deployed the full pipeline on Render for reliable uptime</li>
-        <li>Reduced manual email outreach effort to zero across multiple products</li>
-        <li>Configured conditional logic for different triggers and audience segments</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-automation" onclick="closeOnOverlay(event,'modal-automation')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-automation')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#0a2540,#153e75)">&#128640;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">n8n</span><span class="modal-tag">Postmark</span><span class="modal-tag">Render</span></div><h3 class="modal-title">Lead-to-Email Automation Pipeline</h3><p class="modal-company">Cartrabbit &middot; Retainful</p><p class="modal-desc">End-to-end automation capturing leads from product landing pages and firing personalized email campaigns &mdash; fully hosted, zero manual intervention required.</p><ul class="modal-points"><li>Built n8n workflows to collect form submissions and landing page lead data</li><li>Integrated Postmark for transactional and marketing email delivery</li><li>Deployed the full pipeline on Render for reliable uptime</li><li>Reduced manual email outreach effort to zero across multiple products</li><li>Conditional logic for different campaign triggers and audience segments</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-perf" onclick="closeOnOverlay(event,'modal-perf')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-perf')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#0c2340,#1a3a6e);">📈</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">SEO</span><span class="modal-tag">Lighthouse</span><span class="modal-tag">Core Web Vitals</span></div>
-      <h3 class="modal-title">SaaS Performance Optimization</h3>
-      <p class="modal-company">Cartrabbit · YUKO, Retainful, UpsellWP, WP Loyalty, Discount Rules</p>
-      <p class="modal-desc">Comprehensive performance and SEO overhaul across 5 SaaS product sites — diagnosing bottlenecks and improving organic visibility through targeted technical fixes.</p>
-      <ul class="modal-points">
-        <li>Pushed Lighthouse scores from ~80 to 90–95% on key product and landing pages</li>
-        <li>Resolved LCP, CLS, and FID issues across all 5 products</li>
-        <li>Fixed crawl errors, indexing issues, and on-page gaps via Search Console, Ahrefs, SEMrush</li>
-        <li>Optimized images, eliminated render-blocking scripts, improved caching</li>
-        <li>Improved organic rankings and site health scores measurably</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-perf" onclick="closeOnOverlay(event,'modal-perf')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-perf')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#0c2340,#1a3a6e)">&#128200;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">SEO</span><span class="modal-tag">Lighthouse</span><span class="modal-tag">Core Web Vitals</span></div><h3 class="modal-title">SaaS Performance Optimization</h3><p class="modal-company">Cartrabbit &middot; YUKO, Retainful, UpsellWP, WP Loyalty, Discount Rules</p><p class="modal-desc">Comprehensive performance and SEO overhaul across 5 SaaS product sites &mdash; diagnosing bottlenecks and improving organic visibility through targeted technical fixes.</p><ul class="modal-points"><li>Pushed Lighthouse scores from ~80 to 90&ndash;95% on key product pages</li><li>Resolved LCP, CLS, and FID issues across all 5 products</li><li>Fixed crawl errors, indexing issues via Search Console, Ahrefs, SEMrush</li><li>Optimized images, eliminated render-blocking scripts, improved caching</li><li>Improved organic rankings and site health scores measurably</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-freqbought" onclick="closeOnOverlay(event,'modal-freqbought')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-freqbought')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#12243d,#1c3a60);">🔁</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">WordPress</span><span class="modal-tag">Private Repo</span></div>
-      <h3 class="modal-title">Frequently Bought Product</h3>
-      <p class="modal-company">GitHub · PHP · Updated Sep 24, 2024</p>
-      <p class="modal-desc">A WordPress plugin that identifies and surfaces frequently bought products on product pages, driven by user search behaviour to improve product discovery and sales conversion.</p>
-      <ul class="modal-points">
-        <li>Analyses user search patterns to surface relevant frequently bought products</li>
-        <li>Displays recommendations directly on WooCommerce product pages</li>
-        <li>Built in PHP following WordPress plugin development standards</li>
-        <li>Improves cross-sell opportunities and session depth</li>
-        <li>Lightweight implementation with minimal performance footprint</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-freqbought" onclick="closeOnOverlay(event,'modal-freqbought')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-freqbought')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#12243d,#1c3a60)">&#128257;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">WordPress</span><span class="modal-tag">Private Repo</span></div><h3 class="modal-title">Frequently Bought Product</h3><p class="modal-company">GitHub &middot; PHP &middot; Updated Sep 24, 2024</p><p class="modal-desc">A WordPress plugin that identifies and surfaces frequently bought products on product pages, driven by user search behaviour to improve product discovery and sales conversion.</p><ul class="modal-points"><li>Analyses user search patterns to surface frequently bought products</li><li>Displays recommendations directly on WooCommerce product pages</li><li>Built in PHP following WordPress plugin development standards</li><li>Improves cross-sell opportunities and session depth</li><li>Lightweight implementation with minimal performance footprint</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-woofreq" onclick="closeOnOverlay(event,'modal-woofreq')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-woofreq')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#12243d,#1c3a60);">🛍️</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">WooCommerce</span><span class="modal-tag">Public Repo</span></div>
-      <h3 class="modal-title">WooCommerce Frequently Bought Together</h3>
-      <p class="modal-company">GitHub · PHP · Public · Updated Sep 19, 2024</p>
-      <p class="modal-desc">A WooCommerce plugin that adds a "Frequently Bought Together" section to product pages based on the user's search — helping store owners increase average order value through intelligent cross-selling.</p>
-      <ul class="modal-points">
-        <li>Adds frequently bought products section to WooCommerce product pages</li>
-        <li>Product recommendations driven by real user search data</li>
-        <li>Increases average order value through smart cross-selling</li>
-        <li>Easy to install with no configuration required</li>
-        <li>Built following WooCommerce plugin extension standards in PHP</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-woofreq" onclick="closeOnOverlay(event,'modal-woofreq')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-woofreq')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#12243d,#1c3a60)">&#128717;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">WooCommerce</span><span class="modal-tag">Public Repo</span></div><h3 class="modal-title">WooCommerce Frequently Bought Together</h3><p class="modal-company">GitHub &middot; PHP &middot; Public &middot; Updated Sep 19, 2024</p><p class="modal-desc">A WooCommerce plugin that adds a &ldquo;Frequently Bought Together&rdquo; section to product pages based on the user&rsquo;s search &mdash; helping store owners increase average order value through intelligent cross-selling.</p><ul class="modal-points"><li>Adds frequently bought products section to WooCommerce product pages</li><li>Recommendations driven by real user search data</li><li>Increases average order value through smart cross-selling</li><li>Built following WooCommerce plugin extension standards in PHP</li><li>Easy to install with no configuration required</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-wpsendgrid" onclick="closeOnOverlay(event,'modal-wpsendgrid')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-wpsendgrid')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#12243d,#1c3a60);">📨</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">SendGrid</span><span class="modal-tag">SMTP</span><span class="modal-tag">Public Repo</span></div>
-      <h3 class="modal-title">WP SendGrid Mail</h3>
-      <p class="modal-company">GitHub · PHP · Public · Updated Sep 10, 2024</p>
-      <p class="modal-desc">A WordPress plugin that replaces the default wp_mail function with SendGrid SMTP to ensure reliable, deliverable transactional email from any WordPress site.</p>
-      <ul class="modal-points">
-        <li>Integrates SendGrid SMTP directly into WordPress mail system</li>
-        <li>Replaces unreliable default wp_mail for all transactional emails</li>
-        <li>Simple admin configuration — API key and sender settings in one panel</li>
-        <li>Ensures reliable delivery for forms, WooCommerce orders, and notifications</li>
-        <li>Works with any WordPress theme or plugin that uses wp_mail</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-wpsendgrid" onclick="closeOnOverlay(event,'modal-wpsendgrid')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-wpsendgrid')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#12243d,#1c3a60)">&#128232;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">PHP</span><span class="modal-tag">SendGrid</span><span class="modal-tag">SMTP</span><span class="modal-tag">Public</span></div><h3 class="modal-title">WP SendGrid Mail</h3><p class="modal-company">GitHub &middot; PHP &middot; Public &middot; Updated Sep 10, 2024</p><p class="modal-desc">A WordPress plugin that replaces the default wp_mail function with SendGrid SMTP to ensure reliable, deliverable transactional email from any WordPress site.</p><ul class="modal-points"><li>Integrates SendGrid SMTP directly into WordPress mail system</li><li>Replaces unreliable default wp_mail for all transactional emails</li><li>Simple admin configuration &mdash; API key and sender settings in one panel</li><li>Ensures reliable delivery for forms, orders, and notifications</li><li>Works with any WordPress theme or plugin that uses wp_mail</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-timetracker" onclick="closeOnOverlay(event,'modal-timetracker')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-timetracker')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#0d1f3c,#1b3563);">⏱️</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">Java</span><span class="modal-tag">JavaScript</span><span class="modal-tag">HTML</span><span class="modal-tag">CSS</span></div>
-      <h3 class="modal-title">Time Tracker App</h3>
-      <p class="modal-company">Personal Project</p>
-      <p class="modal-desc">A productivity-focused time tracking application with task creation, live session timers, daily/weekly reports, and visual progress indicators — Java backend with a JavaScript frontend.</p>
-      <ul class="modal-points">
-        <li>Java backend handles session logic, data persistence, and reporting calculations</li>
-        <li>JavaScript frontend delivers real-time timer UI with start, stop, and pause controls</li>
-        <li>Task management with categories, priority tags, and completion tracking</li>
-        <li>Daily and weekly summary reports with visual progress indicators</li>
-        <li>Clean responsive interface built with vanilla HTML and CSS</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-timetracker" onclick="closeOnOverlay(event,'modal-timetracker')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-timetracker')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#0d1f3c,#1b3563)">&#9201;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">Java</span><span class="modal-tag">JavaScript</span><span class="modal-tag">HTML</span><span class="modal-tag">CSS</span></div><h3 class="modal-title">Time Tracker App</h3><p class="modal-company">Personal Project</p><p class="modal-desc">A productivity-focused time tracking application with task creation, live session timers, daily/weekly reports, and visual progress indicators &mdash; Java backend with a JavaScript frontend.</p><ul class="modal-points"><li>Java backend handles session logic, data persistence, and reporting calculations</li><li>JavaScript frontend delivers real-time timer UI with start, stop, and pause controls</li><li>Task management with categories, priority tags, and completion tracking</li><li>Daily and weekly summary reports with visual progress indicators</li><li>Clean responsive interface built with vanilla HTML and CSS</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-imgcompressor" onclick="closeOnOverlay(event,'modal-imgcompressor')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-imgcompressor')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#0b1e3d,#16305e);">🖼️</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">Browser Extension</span><span class="modal-tag">JavaScript</span><span class="modal-tag">Canvas API</span><span class="modal-tag">Chrome</span></div>
-      <h3 class="modal-title">Image Compressor &amp; Converter Extension</h3>
-      <p class="modal-company">Personal Project</p>
-      <p class="modal-desc">A Chrome browser extension for compressing and converting images entirely client-side. Select output format and target file size, with a live preview before downloading.</p>
-      <ul class="modal-points">
-        <li>Format conversion: JPEG, PNG, WebP — manually selectable by user</li>
-        <li>Custom file size target input with real-time compression preview</li>
-        <li>Canvas API for client-side processing — no server or upload needed</li>
-        <li>Batch support for multiple images in one session</li>
-        <li>Clean popup UI with drag-and-drop upload and one-click download</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-imgcompressor" onclick="closeOnOverlay(event,'modal-imgcompressor')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-imgcompressor')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#0b1e3d,#16305e)">&#128444;&#65039;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">Browser Extension</span><span class="modal-tag">JavaScript</span><span class="modal-tag">Canvas API</span><span class="modal-tag">Chrome</span></div><h3 class="modal-title">Image Compressor &amp; Converter Extension</h3><p class="modal-company">Personal Project</p><p class="modal-desc">A Chrome browser extension for compressing and converting images entirely client-side. Users manually select output format and target file size, with a live preview before downloading.</p><ul class="modal-points"><li>Format conversion: JPEG, PNG, WebP &mdash; manually selectable by user</li><li>Custom file size target input with real-time compression preview</li><li>Canvas API for client-side processing &mdash; no server or upload needed</li><li>Batch support for multiple images in one session</li><li>Clean popup UI with drag-and-drop upload and one-click download</li></ul></div></div></div>
 
-<div class="modal-overlay" id="modal-landing" onclick="closeOnOverlay(event,'modal-landing')">
-  <div class="modal"><button class="modal-close" onclick="closeModal('modal-landing')">✕</button>
-    <div class="modal-img" style="background:linear-gradient(135deg,#0e2545,#1d3f72);">🌐</div>
-    <div class="modal-body">
-      <div class="modal-tags"><span class="modal-tag">WordPress</span><span class="modal-tag">Elementor</span><span class="modal-tag">HTML/CSS/JS</span><span class="modal-tag">Conversion</span></div>
-      <h3 class="modal-title">20+ High-Converting Landing Pages</h3>
-      <p class="modal-company">Cartrabbit · YUKO, Retainful, UpsellWP, WP Loyalty, Discount Rules</p>
-      <p class="modal-desc">Designed, built, and maintained 20+ product landing pages across 5 SaaS products — each optimized for conversion rate, load performance, and brand consistency.</p>
-      <ul class="modal-points">
-        <li>Built with WordPress, Elementor, and custom HTML/CSS/JS components</li>
-        <li>Each page optimized for above-the-fold speed and conversion layout</li>
-        <li>Implemented add-to-cart, upsell, and cross-sell flows on product pages</li>
-        <li>Consistent brand identity maintained across all 5 products</li>
-        <li>Post-launch SEO optimization and ongoing performance monitoring</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-landing" onclick="closeOnOverlay(event,'modal-landing')"><div class="modal"><button class="modal-close" onclick="closeModal('modal-landing')">&#10005;</button><div class="modal-img" style="background:linear-gradient(135deg,#0e2545,#1d3f72)">&#127760;</div><div class="modal-body"><div class="modal-tags"><span class="modal-tag">WordPress</span><span class="modal-tag">Elementor</span><span class="modal-tag">HTML/CSS/JS</span></div><h3 class="modal-title">20+ High-Converting Landing Pages</h3><p class="modal-company">Cartrabbit &middot; YUKO, Retainful, UpsellWP, WP Loyalty, Discount Rules</p><p class="modal-desc">Designed, built, and maintained 20+ product landing pages across 5 SaaS products &mdash; each optimized for conversion rate, load performance, and brand consistency.</p><ul class="modal-points"><li>Built with WordPress, Elementor, and custom HTML/CSS/JS components</li><li>Each page optimized for above-the-fold speed and conversion layout</li><li>Implemented add-to-cart, upsell, and cross-sell flows on product pages</li><li>Consistent brand identity maintained across all 5 products</li><li>Post-launch SEO optimization and ongoing performance monitoring</li></ul></div></div></div>
 
 <div class="section-divider"></div>
 
+<!-- CONTACT -->
 <section id="contact">
   <div class="container">
     <div class="reveal">
       <p class="section-label">Get In Touch</p>
-      <h2 class="section-title">Let's <span>Work Together</span></h2>
+      <h2 class="section-title">Let&rsquo;s <span>Work Together</span></h2>
       <div class="section-line"></div>
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
         <h3>Open to opportunities &amp; collaborations</h3>
-        <p>Whether you need a WordPress developer, a performance-focused web designer, or someone to handle your SaaS marketing site — I'd love to connect.</p>
+        <p>Whether you need a WordPress developer, a performance-focused web designer, or someone to handle your SaaS marketing site &mdash; I&rsquo;d love to connect.</p>
         <div class="contact-items">
-          <a href="mailto:snehadeva14@gmail.com" class="contact-item">
-            <div class="contact-item-icon">📧</div>
-            <div><div class="contact-item-label">Email</div><div class="contact-item-val">snehadeva14@gmail.com</div></div>
-          </a>
+          <div class="contact-item" onclick="window.location='mai'+'lto:sneha'+'deva14@gma'+'il.com'" style="cursor:pointer">
+            <div class="contact-item-icon">&#128231;</div>
+            <div><div class="contact-item-label">Email</div><div class="contact-item-val">snehadeva14 [at] gmail.com</div></div>
+          </div>
           <a href="tel:+919361444154" class="contact-item">
-            <div class="contact-item-icon">📞</div>
-            <div><div class="contact-item-label">Phone</div><div class="contact-item-val">+91 9361444154</div></div>
+            <div class="contact-item-icon">&#128222;</div>
+            <div><div class="contact-item-label">Phone</div><div class="contact-item-val">+91 93614 44154</div></div>
           </a>
           <div class="contact-item">
-            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-icon">&#128205;</div>
             <div><div class="contact-item-label">Location</div><div class="contact-item-val">Chennimalai, Tamil Nadu, India</div></div>
           </div>
         </div>
         <div class="social-links">
-          <a href="https://github.com/deva16081
+          <a href="https://github.com/deva16081920t" target="_blank" rel="noopener" class="social-link" title="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/devadharshini-r-711435298/" target="_blank" rel="noopener" class="social-link" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Your Name</label><input type="text" placeholder="John Doe" required/></div>
+            <div class="form-group"><label>Email Address</label><input type="text" placeholder="john at company.com" required/></div>
+          </div>
+          <div class="form-group">
+            <label>I&rsquo;m looking for a&hellip;</label>
+            <select required>
+              <option value="">Select opportunity type...</option>
+              <option>Web Developer (Frontend)</option>
+              <option>Web Developer (Backend)</option>
+              <option>Web Developer (Full Stack)</option>
+              <option>WordPress Developer</option>
+              <option>Work From Home Opportunity</option>
+              <option>Tester / QA Engineer</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell me about your project or opportunity..." required></textarea></div>
+          <button type="submit" class="form-submit">Send Message &rarr;</button>
+          <div class="form-success" id="formSuccess">&#10003; Message sent! I&rsquo;ll get back to you within 24 hours.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-name">Deva<span>.</span></div>
+    <div class="footer-copy">&copy; 2025 Deva Dharshini R &mdash; Built with passion &amp; precision</div>
+    <div class="footer-links">
+      <a href="#hero">Top</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('spotlight').addEventListener;
+  document.addEventListener('mousemove',function(e){
+    var s=document.getElementById('spotlight');
+    s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';
+  });
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+  document.querySelectorAll('.skill-card,.project-card').forEach(function(el,i){
+    el.style.transitionDelay=(i%3)*0.08+'s';
+  });
+  var menuOpen=false;
+  function toggleMenu(){
+    var ul=document.getElementById('navLinks');
+    menuOpen=!menuOpen;
+    ul.style.cssText=menuOpen?'display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:rgba(11,29,58,0.97);backdrop-filter:blur(16px);padding:1.4rem 5%;gap:1rem;border-bottom:1px solid rgba(255,255,255,0.07);':'display:none;';
+  }
+  function openModal(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+  function closeOnOverlay(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(function(m){m.classList.remove('open');document.body.style.overflow='';});
+  });
+  function handleSubmit(e){
+    e.preventDefault();
+    var btn=document.querySelector('.form-submit');
+    btn.textContent='Sending...';btn.disabled=true;
+    setTimeout(function(){
+      document.getElementById('contactForm').reset();
+      btn.style.display='none';
+      document.getElementById('formSuccess').style.display='block';
+    },1200);
+  }
+</script>
+</body>
+</html>
